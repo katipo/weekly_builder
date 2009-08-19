@@ -1,6 +1,6 @@
 # WeeklyCalendar
 module WeeklyHelper
-  
+
   def weekly_calendar(objects, *args)
     options = args.last.is_a?(Hash) ? args.pop : {}
     date = options[:date] || Time.now
@@ -13,23 +13,23 @@ module WeeklyHelper
       concat("<b><a href='?business_hours=true&start_date=#{start_date}'>Business Hours</a> | <a href='?business_hours=false&start_date=#{start_date}'>24-Hours</a></b>")
     end
   end
-  
+
   def weekly_links(options)
     date = options[:date] || Time.now
-    start_date = Date.new(date.year, date.month, date.day) 
+    start_date = Date.new(date.year, date.month, date.day)
     end_date = Date.new(date.year, date.month, date.day) + 7
     concat("<a href='?start_date=#{start_date - 7}?user_id='>« Previous Week</a> ")
     concat("#{start_date.strftime("%B %d -")} #{end_date.strftime("%B %d")} #{start_date.year}")
     concat(" <a href='?start_date=#{start_date + 7}?user_id='>Next Week »</a>")
   end
-  
+
   class WeeklyBuilder
     include ::ActionView::Helpers::TagHelper
 
     def initialize(objects, template, options, start_date, end_date)
       raise ArgumentError, "WeeklyBuilder expects an Array but found a #{objects.inspect}" unless objects.is_a? Array
       @objects, @template, @options, @start_date, @end_date = objects, template, options, start_date, end_date
-    
+
       if options[:business_hours] == "true" or options[:business_hours].blank?
         @hours = ["6am","7am","8am","9am","10am","11am","12pm","1pm","2pm","3pm","4pm","5pm","6pm","7pm"]
         @header_row = "header_row"
@@ -49,12 +49,12 @@ module WeeklyHelper
       end
     end
 
-    def week(options = {})      
+    def week(options = {})
       days #list each day on top row
-      
+
       concat(tag("div", :id => "hours"))
         hours_column #list hours on right column
-              
+
         concat(tag("div", :id => @grid))
           for day in @start_date..@end_date
             concat(tag("div", :id => @day_row))
@@ -67,26 +67,26 @@ module WeeklyHelper
                     concat("</div>")
                   end
                 end
-              end 
-            concat("</div>")  
+              end
+            concat("</div>")
           end
         concat("</div>")
       concat("</div>")
     end
-  
-    def days      
+
+    def days
       concat(tag("div", :id => "days"))
         concat(content_tag("div", "Weekly View", :id => "placeholder"))
-        for day in @start_date..@end_date        
+        for day in @start_date..@end_date
           concat(tag("div", :id => "day"))
           concat(content_tag("b", day.strftime('%A')))
           concat(tag("br"))
           concat(day.strftime('%B %d'))
           concat("</div>")
         end
-      concat("</div>")      
+      concat("</div>")
     end
-    
+
     def hours_column
       concat(tag("div", :id => @header_row))
         for hour in @hours
@@ -94,7 +94,7 @@ module WeeklyHelper
         end
       concat("</div>")
     end
-    
+
     private
     def concat(tag)
       @template.concat(tag)
@@ -120,14 +120,14 @@ module WeeklyHelper
       end_hours = ends_at.strftime('%H').to_i * 60 # 5 * 60 = 300
       end_minutes = ends_at.strftime('%M').to_i + end_hours # 30 + 300 = 330
       difference =  (end_minutes.to_i - start_minutes.to_i) * 1.25 # (330 - 180) = 150 * 1.25 = 187.5
-      
+
       unless difference < 60
         width = difference - 12
       else
         width = 63 #default width (75px minus padding+border)
       end
     end
-    
+
     def truncate_width(width)
       hours = width / 63
       truncate_width = 20 * hours
