@@ -1,3 +1,3 @@
-require 'weekly_calendar'
+require 'weekly_builder'
 
-ActionView::Base.send :include, WeeklyHelper
+ActionView::Base.send :include, WeeklyBuilder
