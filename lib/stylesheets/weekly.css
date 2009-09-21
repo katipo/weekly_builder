@@ -14,8 +14,8 @@
 .weekly_builder .data .hours_row              { width: 1800px; height: 40px; border-bottom: 1px solid #fff; background: #A8CFDA url(/images/header_row.png); overflow: hidden; }
 .weekly_builder .data .hours_row .hour        { width: 74px; height: 40px; float: left; border-right: 1px solid #fff; font-weight: bold; }
 .weekly_builder .data .hours_row .hour div    { padding-top: 10px; text-align: center; }
-.weekly_builder .data .day                    { width: 1800px; height: 75px; background: #C0C0C0 url(/images/grid.png); overflow: hidden; }
-.weekly_builder .data .day .event             { height: 75px; position:relative; background-color: #CCCCFF; border-left: 4px solid #5A484F; }
+.weekly_builder .data .day                    { width: 1800px; position:relative; height: 75px; background: #C0C0C0 url(/images/grid.png); overflow: hidden; }
+.weekly_builder .data .day .event             { height: 75px; position:absolute; opacity: 0.8; background-color: #CCCCFF; border-left: 4px solid #5A484F; }
 .weekly_builder .data .day .event:hover       { background-color: #EEEEFF; }
 .weekly_builder .data .day .event div         { padding: 5px; }
 /* Business Hours overides */
