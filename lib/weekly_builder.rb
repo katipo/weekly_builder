@@ -67,6 +67,7 @@ module WeeklyBuilder
 
     def only_business_hours?
       @events.any? do |e|
+        e.starts_at.day != e.ends_at.day ||
         e.starts_at.hour < settings[:business_start_hour] ||
           e.ends_at.hour > settings[:business_end_hour]
       end ? false : true
